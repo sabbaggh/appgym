@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "expo-template-default",
+    "name": "AppGym",
+    "slug": "appgym",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,13 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.juanincho231.appgym"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.juanincho231.appgym"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +38,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "73770301-00be-4030-9719-6ffcd2998d9e"
+      }
+    },
+    "owner": "juanincho231",
+    "updates": {
+      "url": "https://u.expo.dev/73770301-00be-4030-9719-6ffcd2998d9e"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
