@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Text, View, TouchableOpacity} from "react-native";
+import { Text, View, TouchableOpacity, SafeAreaView} from "react-native";
 import * as FileSystem from 'expo-file-system';
 import {Asset} from 'expo-asset';
 import {useFonts} from 'expo-font'
-import ContenedoPrinpal from './componentes/contenedorPrincipal'
+//import ContenedoPrinpal from './componentes/contenedorPrincipal'
 import LogoPrincipal from './componentes/logoPrincipal'
 import BotonesInicio from './componentes/botonesInicio'
 
@@ -39,9 +39,11 @@ export default function Index() {
   if(!fontsLoaded) return null;
   if(!dbLoaded) return <Text>Cargando...</Text>;
   return (
-    <ContenedoPrinpal>
+    <SafeAreaView style={{flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center', backgroundColor: '#262626'}} >
       <LogoPrincipal/>
       <BotonesInicio/>
-    </ContenedoPrinpal>
+    </SafeAreaView>
   );
 }

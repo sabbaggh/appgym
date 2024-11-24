@@ -9,7 +9,7 @@ const logoPrincipal = () => {
     });
     if(!fontsLoaded) return null;
   return (
-    <View className = 'flex-1 items-center justify-center pb-18'>
+    <View className = 'flex-1 items-center justify-center'>
       <Image source={require('../../assets/images/logo.png')}/>
       <View className='flex flex-row justify-center content-center'>
         <Text style = {{fontFamily:'Baba'}} className='text-5xl text-zinc-50'>SIGMA</Text>
