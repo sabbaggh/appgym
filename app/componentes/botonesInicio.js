@@ -8,9 +8,9 @@ const botonesInicio = () => {
         <Link href="/pantallaRegistro"  className='bg-sky-500 py-3 px-3 rounded-xl'>
           <Text className='text-xl text-white'>Registrarse</Text>
         </Link >
-        <TouchableOpacity className='bg-white py-3 px-3 rounded-xl'>
+        <Link href="/pantallaInicio" className='bg-white py-3 px-3 rounded-xl'>
           <Text className='text-xl text-black'>Iniciar Sesion</Text>
-        </TouchableOpacity>
+        </Link>
       </View>
   )
 }

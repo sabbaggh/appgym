@@ -40,4 +40,42 @@ const anadirUsuario = async (nombre,contra,estatura,peso,objetivo,nivel,callback
     });*/
 };
 
-export { createTable, anadirUsuario};
+const inicioSesion = async (nombre, contra, callback) => {
+    try{
+        const resultado = await db.getAllAsync('SELECT * FROM usuarios WHERE nombre = ? AND contra = ?;',[nombre, contra]);
+        console.log(resultado);
+        if(resultado.length > 0){
+            console.log("Inicio de sesion correcto",)
+            callback(true);
+        }
+        else{
+            console.log('Nombre de usuario o contrasena incorrectos');
+            callback(false);
+        }
+        
+    }
+    catch (error){
+        console.log('Nombre de usuario o contrasena incorrectos', error);
+        callback(false);
+    }
+};
+
+const verificarNombreUnico = async(nombre, callback) => {
+    try{
+        const resultado = await db.getAllAsync('SELECT nombre FROM usuarios WHERE nombre = ?;',[nombre]);
+        if(resultado.length>0){
+            console.log('Nombre de usuario ya esta en uso')
+            callback (false);
+        }
+        else{
+            console.log('Bien')
+            callback (true);
+        }
+    }
+    catch (error){
+        console.log('Ocurrio un error');
+        callback(false);
+    }
+}
+
+export { createTable, anadirUsuario, inicioSesion};
