@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, Touchable, TouchableOp
 import React, { useState } from 'react'
 import { Picker } from '@react-native-picker/picker';
 import { Link } from 'expo-router'
+import { anadirUsuario } from './db';
 
 
 
@@ -27,10 +28,14 @@ const pantallaRegistro = () => {
       return;
     }
     else{
-      Alert.alert(
-        'Registro Exitoso',
-        `Bienvenido, ${nombre}. Tu contraseña es ${password}.`
-      );
+      anadirUsuario(nombre,password,parseInt(estatura),parseInt(peso),objSeleccionado,nivelSeleccionado,(success, error) =>{
+        if(success){
+          Alert.alert('Registro Exitoso', `Se registro correctamente a ${nombre} en la base de datos`);
+        }
+        else{
+          Alert.alert('Hubo un error al agregar el usuario:', error);
+        }
+      });
     }
   };
 
