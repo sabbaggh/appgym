@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-const db = await SQLite.openDatabaseAsync('../assets/mydb.db');
+const db = SQLite.openDatabaseSync('../assets/mydb.db');
 
 const createTable = async () => {
     try {
