@@ -27,27 +27,24 @@ const pantallaRegistro = () => {
       Alert.alert('Error', 'Tu estatura no puede pasar de 250 centimetros');
       return;
     }
-    else if(!verificarNombreUnico(nombre,(success,error))){
-      Alert.alert('Nombre de usuario ya esta en uso, selecciona otro');
-      return;
-    }
     else{
-      const nombreUnico = verificarNombreUnico(nombre,(success,error));
-      if(nombreUnico == success){
-        anadirUsuario(nombre,password,parseInt(estatura),parseInt(peso),objSeleccionado,nivelSeleccionado,(success, error) =>{
-          if(success){
-            Alert.alert('Registro Exitoso', `Se registro correctamente a ${nombre} en la base de datos`);
-          }
-          else{
-            Alert.alert('Hubo un error al agregar el usuario:', error);
-          }
-        });
-      }
-      else{
-        Alert.alert('Nombre de usuario ya esta en uso, selecciona otro');
-        return;
-      }
-      
+      verificarNombreUnico(nombre,(success,error) => {
+        if(success){
+          anadirUsuario(nombre,password,parseInt(estatura),parseInt(peso),objSeleccionado,nivelSeleccionado,(success, error) =>{
+            if(success){
+              Alert.alert('Registro Exitoso', `Se registro correctamente a ${nombre} en la base de datos`);
+            }
+            else{
+              Alert.alert('Hubo un error al agregar el usuario:', error);
+              return;
+            }
+          });
+        }
+        else{
+          Alert.alert('Nombre de usuario ya esta en uso, selecciona otro');
+          return;
+        }
+      })
     }
   };
 

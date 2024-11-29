@@ -45,7 +45,7 @@ const inicioSesion = async (nombre, contra, callback) => {
         const resultado = await db.getAllAsync('SELECT * FROM usuarios WHERE nombre = ? AND contra = ?;',[nombre, contra]);
         console.log(resultado);
         if(resultado.length > 0){
-            console.log("Inicio de sesion correcto",)
+            console.log("Inicio de sesion correcto");
             callback(true);
         }
         else{
@@ -64,12 +64,12 @@ const verificarNombreUnico = async(nombre, callback) => {
     try{
         const resultado = await db.getAllAsync('SELECT nombre FROM usuarios WHERE nombre = ?;',[nombre]);
         if(resultado.length>0){
-            console.log('Nombre de usuario ya esta en uso')
-            callback (false);
+            console.log('Nombre de usuario ya esta en uso');
+            callback(false);
         }
         else{
-            console.log('Bien')
-            callback (true);
+            console.log('Bien');
+            callback(true);
         }
     }
     catch (error){
@@ -78,4 +78,4 @@ const verificarNombreUnico = async(nombre, callback) => {
     }
 }
 
-export { createTable, anadirUsuario, inicioSesion};
+export { createTable, anadirUsuario, inicioSesion, verificarNombreUnico};
