@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, TextInput, Touchable, TouchableOpacity, Alert  } from 'react-native'
 import React, { useState } from 'react'
 import { Picker } from '@react-native-picker/picker';
-import { Link } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
 import { anadirUsuario, verificarNombreUnico } from './db';
 
 
@@ -13,6 +13,7 @@ const pantallaRegistro = () => {
   const [estatura, setEstatura] = useState('');
   const [objSeleccionado, setobjSeleccionado] = useState('');
   const [nivelSeleccionado, setnivelSeleccionado] = useState('');
+  const router = useRouter();
 
   const manejarRegistro = () => {
     if (!nombre || !password || !peso || !estatura || !objSeleccionado || !nivelSeleccionado) {
@@ -32,7 +33,8 @@ const pantallaRegistro = () => {
         if(success){
           anadirUsuario(nombre,password,parseInt(estatura),parseInt(peso),objSeleccionado,nivelSeleccionado,(success, error) =>{
             if(success){
-              Alert.alert('Registro Exitoso', `Se registro correctamente a ${nombre} en la base de datos`);
+              //Alert.alert('Registro Exitoso', `Se registro correctamente a ${nombre} en la base de datos`);
+              router.push({pathname:'/pantallaBienvenida',params:{nombre,mensaje:`Bienvenido, ${nombre}`}});
             }
             else{
               Alert.alert('Hubo un error al agregar el usuario:', error);
