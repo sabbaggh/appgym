@@ -34,7 +34,7 @@ const pantallaRegistro = () => {
           anadirUsuario(nombre,password,parseInt(estatura),parseInt(peso),objSeleccionado,nivelSeleccionado,(success, error) =>{
             if(success){
               //Alert.alert('Registro Exitoso', `Se registro correctamente a ${nombre} en la base de datos`);
-              router.push({pathname:'/pantallaBienvenida',params:{nombre,mensaje:`Bienvenido, ${nombre}`}});
+              router.push({pathname:'/tabs/pantallaBienvenida',params:{nombre,mensaje:`Bienvenido, ${nombre}`}});
             }
             else{
               Alert.alert('Hubo un error al agregar el usuario:', error);

@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, TextInput, Touchable, TouchableOpacity, Alert  } from 'react-native'
 import React, { useState } from 'react'
-import { Picker } from '@react-native-picker/picker';
 import { Link, useRouter } from 'expo-router'
 import { inicioSesion } from './db';
 
@@ -19,7 +18,7 @@ const pantallaInicio = () => {
     else{
       inicioSesion(nombre,password,(success, error) =>{
         if(success){
-          router.push({pathname:'/pantallaBienvenida',params:{nombre,mensaje:`Bienvenido de vuelta, ${nombre}`},});
+          router.push({pathname:'/tabs/pantallaBienvenida',params:{nombre,mensaje:`Bienvenido de vuelta, ${nombre}`},});
         }
         else{
           Alert.alert('Nombre de usuario o contrasena incorrectos', error);

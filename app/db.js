@@ -4,7 +4,7 @@ const db = SQLite.openDatabaseSync('../assets/mydb.db');
 const createTable = async () => {
     try {
         await db.execAsync(
-            'CREATE TABLE IF NOT EXISTS usuarios (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nombre VARCHAR(12) NOT NULL UNIQUE, contra VARCHAR(20) NOT NULL, nivel VARCHAR(15)NOT NULL, objetivo VARCHAR(30) NOT NULL, altura INTEGER NOT NULL, peso INTEGER NOT NULL);');
+            'CREATE TABLE IF NOT EXISTS usuarios (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nombre VARCHAR(12) NOT NULL UNIQUE, contra VARCHAR(20) NOT NULL, nivel VARCHAR(15)NOT NULL, objetivo VARCHAR(30) NOT NULL, altura INTEGER NOT NULL, peso INTEGER NOT NULL, tPromedio INTEGER NOT NULL DEFAULT 0, rCompletadas INTEGER NOT NULL DEFAULT 0, cPromedio INTEGER NOT NULL DEFAULT 0, dPromedio INTEGER NOT NULL DEFAULT 0);');
         console.log('Tabla creada (o ya existía)');
     } catch (error) {
         console.error('Error al crear la tabla:', error);
