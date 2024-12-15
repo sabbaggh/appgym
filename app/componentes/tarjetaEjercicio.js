@@ -1,15 +1,16 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import { Image } from 'expo-image';
 import React from 'react'
+import images from '../../assets/images/images';
 
-const tarjetaEjercicio = () => {
+const tarjetaEjercicio = ({id,nombre}) => {
   return (
+    //Se renderizan los ejercicios de acuerdo con su id y nombre
     <View className = 'w-36 mr-4' >
-      <Image source={require('../../assets/images/ejercicios/1.gif')} className='w-full h-36 object-scale-down'/>
-      <Text className='text-base text-center text-white'>Press de banca con barra</Text>
+      <Image source={images[id]} className='w-full h-36 object-scale-down'/>
+      <Text className='text-base text-center text-white'>{nombre}</Text>
     </View>
   )
 }
 
 export default tarjetaEjercicio
-
-const styles = StyleSheet.create({})
