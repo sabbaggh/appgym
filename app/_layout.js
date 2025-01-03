@@ -8,6 +8,7 @@ export default function RootLayout() {
       <Stack.Screen name="pantallaRegistro" options={{headerShown:false}}/>
       <Stack.Screen name="pantallaInicio" options={{headerShown:false}}/>
       <Stack.Screen name="tabs" options={{headerShown:false}}/>
+      <Stack.Screen name="rutinaPreview" options={{headerShown:false}}/>
     </Stack>
   );
 }

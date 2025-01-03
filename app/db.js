@@ -140,23 +140,24 @@ const anadirUsuario = async (nombre,contra,estatura,peso,objetivo,nivel,callback
     });*/
 };
 
-const inicioSesion = async (nombre, contra, callback) => {
+const inicioSesion = async (nombre, contra) => {
     try{
         const resultado = await db.getAllAsync('SELECT * FROM usuarios WHERE nombre = ? AND contra = ?;',[nombre, contra]);
         console.log(resultado);
         if(resultado.length > 0){
             console.log("Inicio de sesion correcto");
-            callback(true);
+            
+            return resultado;
         }
         else{
             console.log('Nombre de usuario o contrasena incorrectos');
-            callback(false);
+            return resultado;
         }
         
     }
     catch (error){
         console.log('Nombre de usuario o contrasena incorrectos', error);
-        callback(false);
+        return;
     }
 };
 

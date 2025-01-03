@@ -9,6 +9,31 @@ const pantallaInicio = () => {
   const [nombre, setNombre] = useState("");
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const handleInicioSesion = async (nombre, password) => {
+    try {
+      const resultado = await inicioSesion(nombre, password);
+      
+      if (resultado.length > 0) {
+        global.usuario = {
+          'nombre': nombre,
+          'nivel': resultado[0].nivel,
+          'altura': resultado[0].altura,
+          'objetivo': resultado[0].objetivo,
+          'peso': resultado[0].peso,
+          'rCompletadas': resultado[0].rCompletadas,
+        };
+        router.push({
+          pathname: '/tabs/pantallaBienvenida',
+          params: { nombre, mensaje: `Bienvenido de vuelta, ${nombre}` },
+        });
+      } else {
+        Alert.alert('Nombre de usuario o contraseña incorrectos');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Ocurrió un error al intentar iniciar sesión');
+      console.error(error);
+    }
+  };
 
   const manejarInicio = () => {
     if (!nombre || !password) {
@@ -16,14 +41,7 @@ const pantallaInicio = () => {
       return;
     }
     else{
-      inicioSesion(nombre,password,(success, error) =>{
-        if(success){
-          router.push({pathname:'/tabs/pantallaBienvenida',params:{nombre,mensaje:`Bienvenido de vuelta, ${nombre}`},});
-        }
-        else{
-          Alert.alert('Nombre de usuario o contrasena incorrectos', error);
-        }
-      });
+      handleInicioSesion(nombre, password);
     }
   };
 
