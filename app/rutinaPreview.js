@@ -4,18 +4,21 @@ import images from '../assets/images/images';
 import { Image } from 'expo-image';
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import React, { useState } from 'react';
+import { router } from 'expo-router'
 
 const rutinaPreview = () => {
+  //Se extrae la matriz que contiene los datos de la rutina
   const ejercicios = useLocalSearchParams();
   const ejerciciosArray = JSON.parse(ejercicios.ejerciciosArray);
   //console.log(ejerciciosArray[0]);
-  
+  //Se le agrega a esa matriz una cantidad de series y repeticiones inicial
   const componentesEjer = [];
   let ejerciciosArrayConDatos = [];
   for(let i = 0; i < ejerciciosArray.length; i++){
     ejerciciosArrayConDatos.push(ejerciciosArray[i].concat([3,14]))
   }
   const [ejerciciosArrayConDatos2, setEjerciciosArrayConDatos] = useState(ejerciciosArrayConDatos);
+  //Se crean las tarejtas de cada ejercicio perteneciente a la rutina que se selecciono indicando el numero de repeticiones correspondientes a cada ejercicio, el usuario podra modificar la cantidad de repeticiones y series para cada ejercicio
   for(let i = 0; i < ejerciciosArrayConDatos2.length; i++){
     //console.log(ejerciciosArrayConDatos2[i]);
     componentesEjer.push(<View key={i} className='flex-1 flex-col mb-5 w-full justify-center p-3 bg-neutral-700 rounded-xl'>
@@ -61,6 +64,8 @@ const rutinaPreview = () => {
         </View>
       </View>)
   }
+
+  //Funciones para manejar la cantidad de repeticiones o de sets ya sea que se aumenten o se disminuyan
   const aumentarRepeticiones = (index) => {
     let nuevosEjercicios = [...ejerciciosArrayConDatos2]; // Crear una copia del array
     nuevosEjercicios[index][3] += 1; // Modificar la copia
@@ -85,6 +90,14 @@ const rutinaPreview = () => {
     setEjerciciosArrayConDatos(nuevosEjercicios); // Actualizar el estado
     //console.log(nuevosEjercicios); // Verificar en consola
   };
+  //Cuando se presion el boton para iniciar la rutina se mandan los parametros de la rutina a la pantalla hacerRutina
+  const manejarBotonContinuar = () => {
+      console.log(ejerciciosArrayConDatos2);
+      router.push({
+        pathname: './hacerRutina',
+        params: { ejerciciosArrayConDatos2: JSON.stringify(ejerciciosArrayConDatos2) },
+      });
+    };
 
 
   
@@ -94,7 +107,7 @@ const rutinaPreview = () => {
           justifyContent: 'start',
           alignItems: 'start', backgroundColor: '#262626'}} className = 'py-3 px-2 w-screen'>
           {componentesEjer}
-          <TouchableOpacity className = 'bg-sky-500 w-3/6 p-3 mt-2 rounded-lg ml-'>
+          <TouchableOpacity className = 'bg-sky-500 w-3/6 p-3 mt-2 rounded-lg ml-' onPress={manejarBotonContinuar}>
             <Text className = 'text-white text-center text-base'>Iniciar Rutina</Text>
           </TouchableOpacity>
       

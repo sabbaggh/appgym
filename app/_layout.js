@@ -9,6 +9,8 @@ export default function RootLayout() {
       <Stack.Screen name="pantallaInicio" options={{headerShown:false}}/>
       <Stack.Screen name="tabs" options={{headerShown:false}}/>
       <Stack.Screen name="rutinaPreview" options={{headerShown:false}}/>
+      <Stack.Screen name="hacerRutina" options={{headerShown:false}}/>
+      <Stack.Screen name="evaluarRutina" options={{headerShown:false}}/>
     </Stack>
   );
 }
