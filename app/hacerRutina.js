@@ -1,15 +1,60 @@
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
 import { Image } from 'expo-image';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import images from '../assets/images/images';
 import { useLocalSearchParams } from 'expo-router'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { router } from 'expo-router'
 
 const hacerRutina = () => {
-    const ejercicios = useLocalSearchParams();
+    const {ejercicios, ruitnaId} = useLocalSearchParams();
+    const [time, setTime] = useState(0); // Tiempo en segundos
+    const [isRunning, setIsRunning] = useState(true); // Estado del cronómetro
+    const intervalRef = useRef(null); // Referencia para el intervalo
+    // Iniciar el cronómetro automáticamente al montar el componente
+    useEffect(() => {
+        if (isRunning) {
+        intervalRef.current = setInterval(() => {
+            setTime((prevTime) => prevTime + 1); // Incrementa el tiempo cada segundo
+        }, 1000);
+        }
+
+        // Limpiar el intervalo al desmontar el componente
+        return () => clearInterval(intervalRef.current);
+    }, [isRunning]); // Dependencia: isRunning
+    const startStopwatch = () => {
+        if (!isRunning) {
+            setIsRunning(true);
+            intervalRef.current = setInterval(() => {
+            setTime((prevTime) => prevTime + 1); // Incrementa el tiempo cada segundo
+            }, 1000);
+        }
+    };
+
+    // Función para detener el cronómetro
+    const stopStopwatch = () => {
+        if (isRunning) {
+        clearInterval(intervalRef.current); // Detiene el intervalo
+        setIsRunning(false);
+        }
+    };
+     // Formatear el tiempo en formato HH:MM:SS
+    const formatTime = (timeInSeconds) => {
+        const hours = Math.floor(timeInSeconds / 3600);
+        const minutes = Math.floor((timeInSeconds % 3600) / 60);
+        const seconds = timeInSeconds % 60;
+
+        const pad = (num) => (num < 10 ? `0${num}` : num);
+
+        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    };
+    // Limpiar el intervalo cuando el componente se desmonte
+    useEffect(() => {
+        return () => clearInterval(intervalRef.current);
+    }, []);
+
     //console.log(ejercicios);
-    const ejerciciosArray = JSON.parse(ejercicios.ejerciciosArrayConDatos2);
+    const ejerciciosArray = JSON.parse(ejercicios);
     const [imagen,setImagen] = useState(0);
     const [pausa,setPausa] = useState('pause');
     const [final, setFinal] = useState('step-forward');
@@ -23,7 +68,7 @@ const hacerRutina = () => {
         else if(imagen+1 > ejerciciosArray.length-1){
             router.push({
                 pathname: './evaluarRutina',
-                params: { mensaje: 'Completado' },
+                params: { mensaje: 'Completado', ruitnaId: ruitnaId },
             });
         }
     }
@@ -36,10 +81,14 @@ const hacerRutina = () => {
 
     const pausarRutina = (pausa) => {
         if(pausa == 'pause'){
+            stopStopwatch();
             setPausa('play');
+            
         }
         else{
+            startStopwatch();
             setPausa('pause');
+            
         }
     }
   return (
@@ -48,7 +97,7 @@ const hacerRutina = () => {
               alignItems: 'start', backgroundColor: '#262626'}} className = 'py-3 px-2 w-screen bg-neutral-800'>
       <View className='flex-1 flex-col justify-between align-center p-4'>
         <View className='flex flex-row h-1/6 justify-center items-center'>
-            <Text className='text-2xl text-white'>Timer</Text>
+            <Text className='text-2xl text-white'>{formatTime(time)}</Text>
         </View>
         <View className='flex flex-col h-3/5 justify-between items-center '>
             <Text className='w-full text-white text-lg text-center'>{ejerciciosArray[imagen][1]}</Text>

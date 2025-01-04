@@ -21,6 +21,9 @@ const pantallaInicio = () => {
           'objetivo': resultado[0].objetivo,
           'peso': resultado[0].peso,
           'rCompletadas': resultado[0].rCompletadas,
+          'cPromedio': resultado[0].cPromedio,
+          'dPromedio': resultado[0].dPromedio,
+          'tPromedio': resultado[0].tPromedio
         };
         router.push({
           pathname: '/tabs/pantallaBienvenida',

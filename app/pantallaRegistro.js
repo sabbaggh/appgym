@@ -33,6 +33,17 @@ const pantallaRegistro = () => {
         if(success){
           anadirUsuario(nombre,password,parseInt(estatura),parseInt(peso),objSeleccionado,nivelSeleccionado,(success, error) =>{
             if(success){
+              global.usuario = {
+                'nombre': nombre,
+                'nivel': nivelSeleccionado,
+                'altura': estatura,
+                'objetivo': objSeleccionado,
+                'peso': peso,
+                'rCompletadas': 0,
+                'cPromedio': 0,
+                'dPromedio': 0,
+                'tPromedio': 0
+              };
               //Alert.alert('Registro Exitoso', `Se registro correctamente a ${nombre} en la base de datos`);
               router.push({pathname:'/tabs/pantallaBienvenida',params:{nombre,mensaje:`Bienvenido, ${nombre}`}});
             }

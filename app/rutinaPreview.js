@@ -8,8 +8,8 @@ import { router } from 'expo-router'
 
 const rutinaPreview = () => {
   //Se extrae la matriz que contiene los datos de la rutina
-  const ejercicios = useLocalSearchParams();
-  const ejerciciosArray = JSON.parse(ejercicios.ejerciciosArray);
+  const {ejercicios, ruitnaId} = useLocalSearchParams();
+  const ejerciciosArray = JSON.parse(ejercicios);
   //console.log(ejerciciosArray[0]);
   //Se le agrega a esa matriz una cantidad de series y repeticiones inicial
   const componentesEjer = [];
@@ -95,7 +95,7 @@ const rutinaPreview = () => {
       console.log(ejerciciosArrayConDatos2);
       router.push({
         pathname: './hacerRutina',
-        params: { ejerciciosArrayConDatos2: JSON.stringify(ejerciciosArrayConDatos2) },
+        params: { ejercicios: JSON.stringify(ejerciciosArrayConDatos2), ruitnaId: ruitnaId },
       });
     };
 
