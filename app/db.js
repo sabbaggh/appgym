@@ -179,4 +179,18 @@ const verificarNombreUnico = async(nombre, callback) => {
     }
 }
 
-export { createTable, anadirUsuario, inicioSesion, verificarNombreUnico, crearTablaEjercicios, crearTablaRutinas, insertarRutinas, insertarEjercicios, selectRutinas, eliminarTabla, crearTablaRutinasEjercicios, insertarRutinasEjercicios};
+const actualizarDatos = async (nombre, estatura,peso,objetivo,nivel,callback) => {
+    try {
+        const resultado = await db.runAsync(
+            'UPDATE usuarios SET nivel = ?, objetivo = ?, altura = ?, peso = ? WHERE nombre = ?;',
+            [nivel, objetivo, estatura, peso, nombre]
+        );
+        console.log('Se actualizaron los datos', resultado); // Aquí puedes ver el resultado de la inserción
+        callback(true);
+    } catch (error) {
+        console.log('No se pudieron actualizar los datos', error);
+        callback(false, error);
+    }
+}
+
+export { createTable, anadirUsuario, inicioSesion, verificarNombreUnico, crearTablaEjercicios, crearTablaRutinas, insertarRutinas, insertarEjercicios, selectRutinas, eliminarTabla, crearTablaRutinasEjercicios, insertarRutinasEjercicios, actualizarDatos};
