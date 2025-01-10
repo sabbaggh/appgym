@@ -2,19 +2,15 @@ const { iniciarSesion, verificarCredenciales } = require('./db'); // Ajusta la r
 
 // Datos de ejemplo para las pruebas
 const usuarioValido = {
-  correo: "usuario@example.com",
+  nombreUsuario: "juanchow__",
   contraseña: "password123"
 };
 
 const usuarioInvalido = {
-  correo: "usuario@example.com",
+  nombreUsuario: "juanchow__",
   contraseña: "contraseñaIncorrecta"
 };
 
-const usuarioNoRegistrado = {
-  correo: "no_registrado@example.com",
-  contraseña: "password123"
-};
 
 test("Inicio de sesión exitoso", () => {
   const resultado = iniciarSesion(usuarioValido);
@@ -24,11 +20,6 @@ test("Inicio de sesión exitoso", () => {
 test("Inicio de sesión con credenciales inválidas", () => {
   const resultado = iniciarSesion(usuarioInvalido);
   expect(resultado).toBe("Error: Credenciales incorrectas");
-});
-
-test("Inicio de sesión con usuario no registrado", () => {
-  const resultado = iniciarSesion(usuarioNoRegistrado);
-  expect(resultado).toBe("Error: Usuario no registrado");
 });
 
 test("Inicio de sesión sin conexión a internet", () => {

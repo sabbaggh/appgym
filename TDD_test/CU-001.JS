@@ -2,19 +2,22 @@ const { registrarUsuario, verificarDatos, verificarConexion, guardarEnBD } = req
 
 // Datos de ejemplo para las pruebas
 const usuarioValido = {
-  correo: "usuario@example.com",
+  nombreUsuario: "juanchow__",
   contraseña: "password123",
-  nombre: "Juan Perez",
   objetivo: "Bajar de peso",
-  complexion_fisica: "Media"
+  nivel: "Medio",
+  estatura: 175,
+  peso: 80,
 };
 
+//datos vacios y peso supera lo maximo posible
 const usuarioInvalido = {
-  correo: "usuario@example", // Correo inválido
-  contraseña: "pwd",
-  nombre: "",
-  objetivo: "",
-  complexion_fisica: ""
+  nombreUsuario: "juanchow__",
+  contraseña: "",
+  objetivo: "Bajar de peso",
+  nivel: "Medio",
+  estatura: 175,
+  peso: 600
 };
 
 test("Registro exitoso", () => {

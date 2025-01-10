@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native'
+import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native'
 import { Picker } from '@react-native-picker/picker';
 import React, {useState} from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
@@ -119,5 +119,3 @@ const perfil = () => {
 }
 
 export default perfil
-
-const styles = StyleSheet.create({})

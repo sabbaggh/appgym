@@ -2,22 +2,29 @@ const { iniciarRutina } = require('./db'); // Ajusta la ruta según tu estructur
 
 // Datos de ejemplo para las pruebas
 const usuarioValido = {
-  correo: "usuario@example.com",
+  nombreUsuario: "juanchow__",
   contraseña: "password123",
   rutinaSeleccionada: {
     idRutina: 1,
     nombre: "Rutina de fuerza",
     ejercicios: [
-      { nombre: "Sentadillas", repeticiones: 15 },
-      { nombre: "Lagartijas", repeticiones: 10 }
+      { nombre: "Sentadillas", repeticiones: 15, sets:3 },
+      { nombre: "Lagartijas", repeticiones: 10, sets:2 }
     ]
   }
 };
 
-const usuarioSinRutina = {
-  correo: "usuario@example.com",
+const usuarioConDatosInvalidos = {
+  nombreUsuario: "juanchow__",
   contraseña: "password123",
-  rutinaSeleccionada: null
+  rutinaSeleccionada: {
+    idRutina: 1,
+    nombre: "Rutina de fuerza",
+    ejercicios: [
+      { nombre: "Sentadillas", repeticiones: -1, sets:3 },
+      { nombre: "Lagartijas", repeticiones: 10, sets:-2 }
+    ]
+  }
 };
 
 test("Iniciar rutina exitosamente", () => {
@@ -25,9 +32,9 @@ test("Iniciar rutina exitosamente", () => {
   expect(resultado).toBe("Rutina iniciada correctamente");
 });
 
-test("Iniciar rutina sin seleccionar ninguna", () => {
+test("Iniciar rutina con datos invalidos", () => {
   const resultado = iniciarRutina(usuarioSinRutina);
-  expect(resultado).toBe("Error: No se seleccionó ninguna rutina");
+  expect(resultado).toBe("Error: La rutina contiene datos invalidos");
 });
 
 test("Iniciar rutina sin conexión a internet", () => {
