@@ -14,7 +14,6 @@ export default function Index() {
     crearTablaEjercicios();
     crearTablaRutinasEjercicios();
     crearTablaHistorial();
-    select();
   }, []);
   //Se carga la fuente que se va a usar en el logo
   const [fontsLoaded] = useFonts({

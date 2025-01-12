@@ -152,6 +152,33 @@ const selectRutinas = async(id) => {
     }
 }
 
+const selectEjercicios = async(ids) => {
+    try{
+        const rutina = [];
+        for(let i = 0; i< ids.length; i++){
+            let ejercicioBase = {"descripcion": "Rutina generada con IA", "ejercicio_id": 1, "fin": "", "nivel_recomendado": "", "nombre_espanol": "Sentadilla con barra", "nombre_ingles": "Barbell Squat", "rutina_id": 0, "rutina_nombre": "Rutina generada con IA", "veces_realizadas": 0}
+            const resultado = await db.getFirstAsync(`SELECT ejercicio_id, nombre_espanol, nombre_ingles FROM ejercicios WHERE ejercicio_id = ${ids[i]}`);
+            ejercicioBase.nombre_espanol = resultado.nombre_espanol
+            ejercicioBase.nombre_ingles = resultado.nombre_ingles
+            ejercicioBase.ejercicio_id = resultado.ejercicio_id
+            rutina.push(ejercicioBase);
+            
+        }
+        if(rutina.length > 0){
+            return rutina;
+        }
+        else{
+            console.log('No se encontraron ejercicios');
+            return [];
+        }
+
+        
+    }catch(error){
+        console.log('No se pudo encontrar los ejercicios', error)
+        return [];
+    }
+}
+
 const select = async() =>{
     try{
         const resultado = await db.getAllAsync('SELECT * FROM historial;')
@@ -247,4 +274,4 @@ const actualizarDatos = async (nombre, estatura,peso,objetivo,nivel,callback) =>
     }
 }
 
-export { createTable, anadirUsuario, inicioSesion, verificarNombreUnico, crearTablaEjercicios, crearTablaRutinas, insertarRutinas, insertarEjercicios, selectRutinas, eliminarTabla, crearTablaRutinasEjercicios, insertarRutinasEjercicios, actualizarDatos, crearTablaHistorial, actualizarUsuario, actualizarHistorial, select};
+export { createTable, anadirUsuario, inicioSesion, verificarNombreUnico, crearTablaEjercicios, crearTablaRutinas, insertarRutinas, insertarEjercicios, selectRutinas, eliminarTabla, crearTablaRutinasEjercicios, insertarRutinasEjercicios, actualizarDatos, crearTablaHistorial, actualizarUsuario, actualizarHistorial, select, selectEjercicios};
