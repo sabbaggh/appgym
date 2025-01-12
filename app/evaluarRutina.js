@@ -1,23 +1,59 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, Alert } from 'react-native'
 import React from 'react'
 import { useLocalSearchParams } from 'expo-router'
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import { RadioButton } from 'react-native-paper';
+import { actualizarUsuario, actualizarHistorial } from './db';
+
 
 const evaluarRutina = () => {
-  const {mensaje, ruitnaId} = useLocalSearchParams();
+  const {tiempo, ruitnaId, ejercicios} = useLocalSearchParams();
   const [cansancio, setCansancio] = React.useState('1');
   const [dificultad, setDificultad] = React.useState('1');
+  const navigation = useNavigation();
 
   const terminarEvaluacionRegresarAMenu = () =>{
     console.log(cansancio);
     console.log(dificultad);
+    actualizarUsuario(parseInt(tiempo),cansancio,dificultad,(success,error) => {
+      if(success){
+        const tp = Math.round(((global.usuario.tPromedio*global.usuario.rCompletadas)+parseInt(tiempo))/(global.usuario.rCompletadas+1));
+        const rc = global.usuario.rCompletadas+1;
+        const cp = Math.round(((global.usuario.cPromedio*global.usuario.rCompletadas)+parseInt(cansancio))/(rc));
+        const dp = Math.round(((global.usuario.dPromedio*global.usuario.rCompletadas)+parseInt(dificultad))/(rc));
+        const ejerciciosArray = JSON.parse(ejercicios);
+        global.usuario.tPromedio = tp;
+        global.usuario.cPromedio = cp;
+        global.usuario.dPromedio = dp;
+        global.usuario.rCompletadas = rc;
+        actualizarHistorial(ejerciciosArray,global.usuario.peso, global.usuario.altura, global.usuario.objetivo, global.usuario.nivel, rc, tiempo, dificultad, cansancio, (successs,errorr) =>{
+          if (successs){
+            Alert.alert("Se registraron los datos correctamente");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: 'tabs' }],
+                params:{nombre: global.usuario.nombre,mensaje:`Bienvenido, ${global.usuario.nombre}`}
+              })
+            );
+          }
+          else{
+            Alert.alert("Error", errorr);
+          }
+        });    
+      }
+      else{
+        Alert.alert("Error", error);
+      }
+    })
+    
   }
   return (
     <SafeAreaView style={{flex: 1,
                   justifyContent: 'start',
                   alignItems: 'start', backgroundColor: '#262626'}} className = 'py-3 px-2 w-screen bg-neutral-800'>
       <View className='flex-col justify-center h-full'>
-        <Text className='text-white text-lg text-center'>Completaste la rutina {ruitnaId}</Text>
+        <Text className='text-white text-lg text-center'>Completaste la rutina en {tiempo} segundos</Text>
         <Text className='text-white text-lg'>Ingresa tu nivel de cansancio que sientes en una escala de 1-5</Text>
         <View className='flex-col justify-center items-center'>
           <View className='flex-row items-center justify-start w-full h-8'>

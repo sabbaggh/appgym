@@ -39,8 +39,9 @@ const perfil = () => {
       <Text className='text-white text-xl px-3 pt-2 border-neutral-500 border-t-2'>Peso</Text>
       <TextInput placeholder={peso} className = 'text-white text-base rounded-xl border-neutral-500 border-2 w-full my-2 px-2' value={peso} onChangeText={setPeso} keyboardType = 'numeric' placeholderTextColor="#888"/>
       <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Dificultad Promedio: {global.usuario.dPromedio}</Text>
-      <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Tiempo promedio para completar rutinas: {global.usuario.tPromedio}</Text>
       <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Cansancio Promedio: {global.usuario.cPromedio}</Text>
+      <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Tiempo promedio para completar rutinas: {global.usuario.tPromedio}</Text>
+      
       <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Rutinas Completadas: {global.usuario.rCompletadas}</Text>
     </View>:
     <View>
@@ -52,8 +53,9 @@ const perfil = () => {
     <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Altura: {global.usuario.altura} cm</Text>
     <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Peso: {global.usuario.peso} Kg</Text>
     <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Dificultad Promedio: {global.usuario.dPromedio}</Text>
-    <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Tiempo promedio para completar rutinas: {global.usuario.tPromedio}</Text>
     <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Cansancio Promedio: {global.usuario.cPromedio}</Text>
+    <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Tiempo promedio para completar rutinas: {global.usuario.tPromedio} segundos</Text>
+    
     <Text className='text-white text-xl p-3 border-neutral-500 border-t-2'>Rutinas Completadas: {global.usuario.rCompletadas}</Text>
   </View>
   //Funcion para actualizar los datos una vez el usuario termina de editar los datos y le da click en guardar datos

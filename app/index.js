@@ -4,7 +4,7 @@ import {useFonts} from 'expo-font';
 //import ContenedoPrinpal from './componentes/contenedorPrincipal'
 import LogoPrincipal from './componentes/logoPrincipal';
 import BotonesInicio from './componentes/botonesInicio';
-import {createTable, crearTablaEjercicios, crearTablaRutinas, crearTablaRutinasEjercicios, insertarRutinasEjercicios, eliminarTabla} from './db';
+import {createTable, crearTablaEjercicios, crearTablaRutinas, crearTablaRutinasEjercicios, insertarRutinasEjercicios, eliminarTabla, crearTablaHistorial, select} from './db';
 
 export default function Index() {
   //Se crean todas las tablas necesarias al momento de iniciar la app, los datos ya se cargaron anteriormente
@@ -13,6 +13,8 @@ export default function Index() {
     crearTablaRutinas();
     crearTablaEjercicios();
     crearTablaRutinasEjercicios();
+    crearTablaHistorial();
+    select();
   }, []);
   //Se carga la fuente que se va a usar en el logo
   const [fontsLoaded] = useFonts({

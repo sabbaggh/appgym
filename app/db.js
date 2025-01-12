@@ -44,6 +44,17 @@ const crearTablaRutinasEjercicios = async () => {
     }
 };
 
+const crearTablaHistorial = async () => {
+    try{
+        await db.execAsync(
+            'CREATE TABLE IF NOT EXISTS historial (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, usuario_peso INTEGER, usuario_estatura INTEGER, usuario_objetivo VARCHAR(15), usuario_nivel VARCHAR(30), usuario_rutinas_completadas INTEGER, usuario_tiempo_en_completar REAL, ejercicios_sets INTEGER, ejercicio_reps INTEGER, dificultad_percibida INTEGER, cansancio_percibido INTEGER, id_ejercicio INTEGER);'
+        );
+        console.log('Se creo tabla historiales');
+    } catch(error) {
+        console.log('Error al crear la tabla');
+    }
+}
+
 
 
 ////INSERTS INICIALES
@@ -72,6 +83,39 @@ const insertarRutinasEjercicios = async () => {
         console.log('Se insertaron los ejercicios con sus rutinas');
     } catch (error) {
         console.error('Error al crear la tabla:', error);
+    }
+};
+
+const actualizarUsuario = async (tiempo, cansancio, dificultad, callback) => {
+    try{
+        const tp = Math.round(((global.usuario.tPromedio*global.usuario.rCompletadas)+tiempo)/(global.usuario.rCompletadas+1));
+        const rc = global.usuario.rCompletadas+1;
+        const cp = Math.round(((global.usuario.cPromedio*global.usuario.rCompletadas)+cansancio)/(global.usuario.rCompletadas+1));
+        const dp = Math.round(((global.usuario.dPromedio*global.usuario.rCompletadas)+dificultad)/(global.usuario.rCompletadas+1));
+
+        const resultado = await db.runAsync(
+            "UPDATE usuarios SET tPromedio = ?, rCompletadas = ?, cPromedio = ?, dPromedio = ? WHERE nombre = ?;",
+            [tp, rc, cp, dp, global.usuario.nombre]
+        );
+        console.log('Se guardo correctamente la evaluacion', resultado);
+        callback(true);
+    }catch(error){
+        callback(false, error);
+    }
+    
+};
+
+const actualizarHistorial = async (ejercicios,peso, estatura, objetivo, nivel, rutinasCompletadas, tiempo, dificultad, cansancio, callback) => {
+    try{
+        for(let i = 0; i < ejercicios.length; i++){
+            const resultado = await db.runAsync('INSERT INTO historial (usuario_peso, usuario_estatura, usuario_objetivo, usuario_nivel, usuario_rutinas_completadas, usuario_tiempo_en_completar, ejercicios_sets, ejercicio_reps, dificultad_percibida, cansancio_percibido, id_ejercicio) values (?,?,?,?,?,?,?,?,?,?,?);',
+                [peso, estatura, objetivo, nivel, rutinasCompletadas, tiempo, ejercicios[i][2], ejercicios[i][3],dificultad, cansancio, ejercicios[i][0]]
+            );
+            console.log('Se actualizo el historial correctamente', resultado);
+        }
+        callback(true);
+    }catch(error){
+        callback(false, error);
     }
 };
 
@@ -105,6 +149,16 @@ const selectRutinas = async(id) => {
     catch (error){
         console.log('Ocurrio un error');
         return [];
+    }
+}
+
+const select = async() =>{
+    try{
+        const resultado = await db.getAllAsync('SELECT * FROM historial;')
+        console.log(resultado);
+    }
+    catch(error){
+        console.log(error);
     }
 }
 
@@ -193,4 +247,4 @@ const actualizarDatos = async (nombre, estatura,peso,objetivo,nivel,callback) =>
     }
 }
 
-export { createTable, anadirUsuario, inicioSesion, verificarNombreUnico, crearTablaEjercicios, crearTablaRutinas, insertarRutinas, insertarEjercicios, selectRutinas, eliminarTabla, crearTablaRutinasEjercicios, insertarRutinasEjercicios, actualizarDatos};
+export { createTable, anadirUsuario, inicioSesion, verificarNombreUnico, crearTablaEjercicios, crearTablaRutinas, insertarRutinas, insertarEjercicios, selectRutinas, eliminarTabla, crearTablaRutinasEjercicios, insertarRutinasEjercicios, actualizarDatos, crearTablaHistorial, actualizarUsuario, actualizarHistorial, select};

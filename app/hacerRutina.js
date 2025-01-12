@@ -68,7 +68,7 @@ const hacerRutina = () => {
         else if(imagen+1 > ejerciciosArray.length-1){
             router.push({
                 pathname: './evaluarRutina',
-                params: { mensaje: 'Completado', ruitnaId: ruitnaId },
+                params: { tiempo: time, ruitnaId: ruitnaId, ejercicios: JSON.stringify(ejerciciosArray) },
             });
         }
     }
