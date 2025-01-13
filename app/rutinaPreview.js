@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Touchable, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Touchable, TouchableOpacity, Alert } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
 import images from '../assets/images/images';
 import { Image } from 'expo-image';
@@ -93,6 +93,12 @@ const rutinaPreview = () => {
   //Cuando se presion el boton para iniciar la rutina se mandan los parametros de la rutina a la pantalla hacerRutina
   const manejarBotonContinuar = () => {
       console.log(ejerciciosArrayConDatos2);
+      for(let i = 0; i<ejerciciosArrayConDatos2.length; i++){
+        if(ejerciciosArrayConDatos2[i][2] < 1 || ejerciciosArrayConDatos2[i][3] < 1){
+          Alert.alert('Error', 'El numero de repeticiones o sets no puede ser menor a 1');
+          return;
+        }
+      }
       router.push({
         pathname: './hacerRutina',
         params: { ejercicios: JSON.stringify(ejerciciosArrayConDatos2), ruitnaId: ruitnaId },
