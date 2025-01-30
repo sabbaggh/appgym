@@ -44,7 +44,7 @@ const pantallaBienvenida = () => {
         usuario_tiempo_en_completar: global.usuario.tPromedio 
       };
       const respuesta = await axios.post(
-        'http://192.168.100.75:5000/generarRutina',
+        'http://127.0.0.1:5000/generarRutina',
         datosUsuario
       );
       //console.log(JSON.parse(respuesta.request._response));
